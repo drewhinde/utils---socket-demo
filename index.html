@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Bitcoin Realtime</title>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body onpageshow="connectSocket()">
+        <div id="tracker" class="tracker">
+            <h1>Bitcoin Price Tracker</h1>
+            <!-- <button id='btn' onclick="connectSocket()">Connect</button> -->
+            <p>The latest price of Bitcoin is: <span id='price'>-</p>
+        </div>
+    </body>
+    <script src='/socket.io/socket.io.js'></script>
+        <script>
+            function connectSocket() {
+                console.log('Opening Socket Connection');
+                var socket = io.connect();
+                socket.on('stream', function(data){
+                    console.log('received message'  + data.price);
+                    document.getElementById('price').innerHTML = '&#163;' + data.price.toLocaleString();
+                });
+            }
+        </script>
+</html>
